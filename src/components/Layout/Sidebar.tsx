@@ -13,7 +13,7 @@ const Sidebar = () => {
         <MenuItem url="/blog" title="Blog" />
         <button
           onClick={() => {}}
-          className="block cursor-pointer text-white hover:text-amber-100"
+          className="block cursor-pointer text-white hover:text-amber-300"
         >
           Logout
         </button>
