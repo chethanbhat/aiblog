@@ -1,6 +1,10 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { googleLogout } from "@react-oauth/google";
+import { useUser } from "../../context";
 
 const Sidebar = () => {
+  const { setUser } = useUser();
+  const navigate = useNavigate();
   return (
     <aside className="w-1/6 h-full p-6 bg-violet-900 text-white flex flex-col">
       {/* Brand */}
@@ -12,7 +16,12 @@ const Sidebar = () => {
         <MenuItem url="/" title="Categories" />
         <MenuItem url="/blog" title="Blog" />
         <button
-          onClick={() => {}}
+          onClick={() => {
+            googleLogout();
+            localStorage.removeItem("user");
+            setUser(null);
+            navigate("/");
+          }}
           className="block cursor-pointer text-white hover:text-amber-300"
         >
           Logout

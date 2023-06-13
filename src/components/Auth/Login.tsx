@@ -3,10 +3,19 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { sanityClient } from "../../utils";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../context";
 
 const Login = () => {
   const [credentials, setCredentials] = useState<any | null>(null);
-  let navigate = useNavigate();
+  const { user: lsUser, setUser } = useUser();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (lsUser) {
+      navigate("/");
+    }
+  }, [lsUser]);
 
   useEffect(() => {
     if (credentials) {
@@ -26,18 +35,25 @@ const Login = () => {
           },
         }
       );
-      const user = await res.data;
-      console.log("user => ", user);
+      const _user = await res.data;
+      console.log("user => ", _user);
       sanityClient
         .createIfNotExists({
           _type: "user",
-          _id: user.id,
-          username: user.name,
-          image: user.picture,
+          _id: _user.id,
+          username: _user.name,
+          email: _user.email,
+          image: _user.picture,
         })
-        .then((user) => {
-          console.log(user);
-          navigate("/");
+        .then((u) => {
+          console.log("user here");
+          setUser({
+            id: u._id,
+            username: u.username,
+            email: u.email,
+            image: u.image,
+          });
+          console.log("created user");
         })
         .catch((err) => {
           console.log("Something went wrong => ", err);

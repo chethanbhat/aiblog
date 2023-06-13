@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
+import { useUser } from "../../context";
+import { useNavigate } from "react-router-dom";
 
 const Page = ({ content }: { content: React.ReactNode }) => {
+  const { user } = useUser();
+  const navigate = useNavigate();
+  console.log(user);
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user]);
+
   return (
     <main className="bg-blue-50 flex h-screen">
       <Sidebar />
