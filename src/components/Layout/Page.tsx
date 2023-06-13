@@ -3,10 +3,10 @@ import Sidebar from "./Sidebar";
 
 const Page = ({ content }: { content: React.ReactNode }) => {
   return (
-    <div>
+    <main className="bg-blue-50 flex h-screen">
       <Sidebar />
-      {content}
-    </div>
+      <div className="h-full overflow-y-auto p-6">{content}</div>
+    </main>
   );
 };
 
