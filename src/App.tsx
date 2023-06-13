@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Categories from "./Pages/Categories";
 import Blog from "./Pages/Blog";
 import Write from "./Pages/Write";
-import Login from "./Pages/Login";
-import Signup from "./Pages/Signup";
 import NotFound from "./Pages/404";
+import Login from "./components/Auth/Login";
+import Signup from "./components/Auth/Signup";
 
 function App() {
   return (
