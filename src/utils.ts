@@ -9,5 +9,7 @@ export const sanityClient = createClient({
   token: import.meta.env.VITE_SANITY_API_TOKEN,
 });
 
+console.log("TEST");
+
 const builder = imageUrlBuilder(sanityClient);
 export const urlFor = (source: any) => builder.image(source);
