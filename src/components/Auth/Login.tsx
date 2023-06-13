@@ -19,7 +19,6 @@ const Login = () => {
 
   useEffect(() => {
     if (credentials) {
-      console.log(credentials);
       SignupOrLogin();
     }
   }, [credentials]);

@@ -4,7 +4,6 @@ import { useUser } from "../../context";
 
 const Sidebar = () => {
   const { user, setUser } = useUser();
-  console.log(user);
   const navigate = useNavigate();
   return (
     <aside className="w-1/6 h-full p-6 bg-violet-900 text-white flex flex-col">

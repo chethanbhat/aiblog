@@ -11,3 +11,17 @@ export const sanityClient = createClient({
 
 const builder = imageUrlBuilder(sanityClient);
 export const urlFor = (source: any) => builder.image(source);
+
+// Queries
+
+// Get Categories
+export const getCategoriesQuery = `*[_type == "categories"]`;
+
+// Get Keywords
+export const getKeywordsQuery = `*[_type == "keywords"]`;
+
+// Get Topics
+export const getTopicsQuery = `*[_type == "topics"]`;
+
+// Get Blog
+export const getBlogQuery = `*[_type == "blog"]`;
