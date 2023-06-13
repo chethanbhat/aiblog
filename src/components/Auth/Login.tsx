@@ -1,9 +1,12 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { sanityClient } from "../../utils";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [credentials, setCredentials] = useState<any | null>(null);
+  let navigate = useNavigate();
 
   useEffect(() => {
     if (credentials) {
@@ -24,7 +27,20 @@ const Login = () => {
         }
       );
       const user = await res.data;
-      console.log(user);
+      console.log("user => ", user);
+      sanityClient
+        .createIfNotExists({
+          _type: "user",
+          _id: user.id,
+          username: user.name,
+          image: user.picture,
+        })
+        .then((user) => {
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log("Something went wrong => ", err);
+        });
     } catch (error) {
       console.log("Authentication Failed => ", error);
     }

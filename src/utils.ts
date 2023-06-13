@@ -1,4 +1,13 @@
-export const getUserCredentials = (clientID: string, jwt: string) => {
-  console.log("client ID => ", clientID);
-  console.log("jwt token => ", jwt);
-};
+import { createClient } from "@sanity/client";
+import imageUrlBuilder from "@sanity/image-url";
+
+export const sanityClient = createClient({
+  projectId: import.meta.env.VITE_SANITY_PROJECT_ID,
+  dataset: "production",
+  apiVersion: "2023-06-13",
+  useCdn: true,
+  token: import.meta.env.VITE_SANITY_API_TOKEN,
+});
+
+const builder = imageUrlBuilder(sanityClient);
+export const urlFor = (source: any) => builder.image(source);
