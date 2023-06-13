@@ -36,6 +36,7 @@ const Login = () => {
           image: user.picture,
         })
         .then((user) => {
+          console.log(user);
           navigate("/");
         })
         .catch((err) => {
