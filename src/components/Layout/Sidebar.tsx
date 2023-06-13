@@ -3,7 +3,8 @@ import { googleLogout } from "@react-oauth/google";
 import { useUser } from "../../context";
 
 const Sidebar = () => {
-  const { setUser } = useUser();
+  const { user, setUser } = useUser();
+  console.log(user);
   const navigate = useNavigate();
   return (
     <aside className="w-1/6 h-full p-6 bg-violet-900 text-white flex flex-col">
@@ -29,7 +30,14 @@ const Sidebar = () => {
       </nav>
       {/* Footer */}
       <div className="flex-1 flex flex-col justify-end">
-        <div className="mb-6 border-b border-blue-100"></div>
+        <div className="pb-6 mb-6 border-b border-blue-100 flex items-center">
+          <img
+            src={user?.image}
+            alt={user?.username}
+            className="w-8 h-8 mr-2 rounded-full"
+          />
+          <span>{user?.username || user?.email}</span>
+        </div>
         <a className="hover:text-amber-300" href="https://chethanbhat.com">
           @2023 - chethanbhat.com
         </a>

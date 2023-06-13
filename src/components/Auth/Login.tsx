@@ -46,14 +46,12 @@ const Login = () => {
           image: _user.picture,
         })
         .then((u) => {
-          console.log("user here");
           setUser({
             id: u._id,
             username: u.username,
             email: u.email,
             image: u.image,
           });
-          console.log("created user");
         })
         .catch((err) => {
           console.log("Something went wrong => ", err);
