@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import { getKeywordsQuery, sanityClient } from "../../utils";
-import { Category } from "./CategoryHome";
 import Spinner from "../Layout/Spinner";
-
-export interface Keyword {
-  _id: string;
-  keyword: string;
-}
+import { Category, Keyword } from "../../types";
 
 const AddTopicModal = ({
   categories,
