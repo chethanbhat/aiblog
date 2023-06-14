@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import { Topic } from "../../types";
 import { useState, useEffect, KeyboardEvent, ChangeEvent, useRef } from "react";
+import { openAIClient } from "../../utils";
+import Spinner from "../Layout/Spinner";
 
 const Editor = ({ topic }: { topic: Topic | null }) => {
   const [article, setArticle] = useState("");
-  const [mood, setMood] = useState("happy");
+  const [mood, setMood] = useState("none");
   const [undoStack, setUndoStack] = useState<string[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [generating, setGenerating] = useState(false);
 
   // Undo the last change
   const undo = () => {
@@ -52,6 +55,29 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
     setArticle(newValue);
   };
 
+  const generateBlog = async () => {
+    setGenerating(true);
+    let blogPrompt = `Please generate a paragraph for the topic ${topic?.title}. `;
+
+    if (mood !== "none") {
+      blogPrompt += `Set the mood of the article as ${mood}.`;
+    }
+    try {
+      const res = await openAIClient.createCompletion({
+        model: "text-davinci-003",
+        prompt: blogPrompt,
+        max_tokens: 250,
+      });
+      if (res?.data?.choices[0]?.text) {
+        setArticle(res.data.choices[0].text.trim());
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   if (!topic) {
     return <></>;
   }
@@ -90,9 +116,20 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
       {/* AI Prompt */}
 
       <div className="mb-4">
-        <label className="block mb-2">Use AI to generate </label>
+        <label className="block mb-2">Mood of the Article</label>
         {/* Moods */}
         <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center">
+            <input
+              checked={mood === "none"}
+              onChange={(e) => setMood(e.target.value)}
+              value="none"
+              className="mr-2 cursor-pointer"
+              type="radio"
+              name="blogMood"
+            />
+            <label>None</label>
+          </div>
           <div className="flex items-center">
             <input
               checked={mood === "happy"}
@@ -138,8 +175,21 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
             <label>Funny</label>
           </div>
         </div>
-        <button className="bg-amber-300 text-black px-2 py-1.5 rounded block shadow-sm">
-          Generate
+        <button
+          disabled={generating}
+          onClick={() => generateBlog()}
+          className="bg-amber-300 text-black px-2 py-1.5 rounded block shadow-sm disabled:bg-amber-100 disabled:cursor-pointer"
+        >
+          {generating ? (
+            <span className="flex items-center">
+              Generating
+              <span className="ml-2">
+                <Spinner />
+              </span>
+            </span>
+          ) : (
+            <>Generate with AI</>
+          )}
         </button>
       </div>
 

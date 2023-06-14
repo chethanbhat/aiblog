@@ -1,6 +1,14 @@
 import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
 
+import { Configuration, OpenAIApi } from "openai";
+
+export const openAIClient = new OpenAIApi(
+  new Configuration({
+    apiKey: import.meta.env.VITE_OPEN_API_KEY,
+  })
+);
+
 export const sanityClient = createClient({
   projectId: import.meta.env.VITE_SANITY_PROJECT_ID,
   dataset: "production",
