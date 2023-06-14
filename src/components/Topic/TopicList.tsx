@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Topic } from "../../types";
 
 const TopicList = ({
@@ -11,7 +12,8 @@ const TopicList = ({
     <div className="w-full pr-4 flex-1 overflow-y-auto">
       {topics.length > 0 ? (
         topics.map((t: Topic) => (
-          <div
+          <Link
+            to={`/write/${t._id}`}
             key={t._id}
             className="bg-white rounded-md mb-4 p-4 flex justify-between relative shadow"
           >
@@ -34,7 +36,7 @@ const TopicList = ({
             <button className="text-xs self-center bg-purple-900 text-white rounded px-2 py-1.5 shadow">
               Write
             </button>
-          </div>
+          </Link>
         ))
       ) : (
         <div className="w-full h-full flex justify-center items-center text-center">
