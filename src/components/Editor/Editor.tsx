@@ -4,6 +4,7 @@ import { useState, useEffect, KeyboardEvent, ChangeEvent, useRef } from "react";
 
 const Editor = ({ topic }: { topic: Topic | null }) => {
   const [article, setArticle] = useState("");
+  const [mood, setMood] = useState("happy");
   const [undoStack, setUndoStack] = useState<string[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -77,7 +78,8 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
           </span>
         ))}
       </div>
-      <div>
+      {/* Editor */}
+      <div className="mb-4">
         <textarea
           className="w-full h-[250px] overflow-y-auto rounded-md border border-gray-200 p-4"
           value={article}
@@ -85,6 +87,75 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
           onChange={handleChange}
         />
       </div>
+      {/* AI Prompt */}
+
+      <div className="mb-4">
+        <label className="block mb-2">Use AI to generate </label>
+        {/* Moods */}
+        <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center">
+            <input
+              checked={mood === "happy"}
+              onChange={(e) => setMood(e.target.value)}
+              value="happy"
+              className="mr-2 cursor-pointer"
+              type="radio"
+              name="blogMood"
+            />
+            <label>Happy</label>
+          </div>
+          <div className="flex items-center">
+            <input
+              checked={mood === "sad"}
+              onChange={(e) => setMood(e.target.value)}
+              value="sad"
+              className="mr-2 cursor-pointer"
+              type="radio"
+              name="blogMood"
+            />
+            <label>Sad</label>
+          </div>
+          <div className="flex items-center">
+            <input
+              checked={mood === "angry"}
+              onChange={(e) => setMood(e.target.value)}
+              value="angry"
+              className="mr-2 cursor-pointer"
+              type="radio"
+              name="blogMood"
+            />
+            <label>Angry</label>
+          </div>
+          <div className="flex items-center">
+            <input
+              checked={mood === "funny"}
+              onChange={(e) => setMood(e.target.value)}
+              value="funny"
+              className="mr-2 cursor-pointer"
+              type="radio"
+              name="blogMood"
+            />
+            <label>Funny</label>
+          </div>
+        </div>
+        <button className="bg-amber-300 text-black px-2 py-1.5 rounded block shadow-sm">
+          Generate
+        </button>
+      </div>
+
+      {/* Image Upload  */}
+      <div className="mb-4">
+        <label className="block mb-2">Featured Image</label>
+        <input type="file" name="" id="" />
+      </div>
+
+      {/* Button */}
+      <button
+        disabled
+        className="bg-purple-900 disabled:bg-gray-200 disabled:text-black disabled:cursor-not-allowed text-white px-2 py-1.5 rounded block ml-auto shadow-sm"
+      >
+        Create Blog
+      </button>
     </div>
   );
 };

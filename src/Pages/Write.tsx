@@ -13,9 +13,7 @@ const Write = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!topicID) {
-      navigate("/");
-    } else {
+    if (topicID) {
       setLoading(true);
       getTopic(topicID);
     }
