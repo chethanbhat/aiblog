@@ -128,7 +128,7 @@ const AddTopicModal = ({
                   key={k._id}
                   className={`${
                     selectedKeywords.map((sk) => sk.keyword).includes(k.keyword)
-                      ? "bg-purple-700 text-white"
+                      ? "bg-violet-700 text-white"
                       : "bg-gray-200 text-black"
                   } rounded-md px-1.5 py-1 cursor-pointer text-xs self-center`}
                 >
@@ -156,7 +156,7 @@ const AddTopicModal = ({
                   addNewKeyword();
                 }
               }}
-              className="bg-purple-200 font-bold w-8 h-8 px-1 py-1 ml-4 flex justify-center items-center"
+              className="bg-violet-200 font-bold w-8 h-8 px-1 py-1 ml-4 flex justify-center items-center"
             >
               +
             </button>
@@ -172,7 +172,7 @@ const AddTopicModal = ({
           <button
             disabled={topic.length < 1 || selectedKeywords.length < 1}
             onClick={addNewTopic}
-            className="bg-purple-900 disabled:bg-purple-50 disabled:text-black disabled:cursor-not-allowed    hover:bg-purple-700 shadow-lg text-white text-sm px-2 py-1.5 rounded-md"
+            className="bg-violet-900 disabled:bg-violet-50 disabled:text-black disabled:cursor-not-allowed    hover:bg-violet-700 shadow-lg text-white text-sm px-2 py-1.5 rounded-md"
           >
             Add Topic
           </button>

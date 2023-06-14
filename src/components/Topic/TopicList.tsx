@@ -27,13 +27,13 @@ const TopicList = ({
               <h3 className="mb-4">{t.title}</h3>
               <div className="flex gap-2">
                 {t.keywords.map((k) => (
-                  <span className="border border-purple-700 text-purple-900 rounded-md px-1.5 py-1 cursor-pointer text-xs">
+                  <span className="border border-violet-700 text-violet-900 rounded-md px-1.5 py-1 cursor-pointer text-xs">
                     {k.keyword}
                   </span>
                 ))}
               </div>
             </div>
-            <button className="text-xs self-center bg-purple-900 text-white rounded px-2 py-1.5 shadow">
+            <button className="text-xs self-center bg-violet-900 hover:bg-violet-700 text-white rounded px-2 py-1.5 shadow">
               Write
             </button>
           </Link>

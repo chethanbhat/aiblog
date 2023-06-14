@@ -27,8 +27,8 @@ const ArticleList = () => {
 
   return (
     <div>
-      <h3 className="text-xl font-semibold">Latest Blog</h3>
-      <div className="w-full py-8 flex flex-wrap justify-start gap-6">
+      <h3 className="text-xl font-semibold  text-gray-600 mb-4">Latest Blog</h3>
+      <div className="w-full pb-8 flex flex-wrap justify-start gap-6">
         {articles.map((a) => (
           <Article key={a._id} article={a} />
         ))}

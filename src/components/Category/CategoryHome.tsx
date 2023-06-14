@@ -98,33 +98,36 @@ export const CategoryTabs = ({
   setShowModal: (val: boolean) => void;
 }) => {
   return (
-    <div className="w-full flex justify-between items-center mb-6">
-      <nav className="w-3/4 flex justify-evenly">
-        {/* Default All Category */}
-        <Tab
-          tab={{
-            _id: "none",
-            category: "All",
-          }}
-          activeTab={activeTab}
-          setActiveTab={() => setActiveTab(allCategory)}
-        />
-        {/* Rest of Categories */}
-        {categories.map((t: Category) => (
+    <div className="w-full">
+      <h3 className="text-xl font-semibold mb-4 text-gray-600">Categories</h3>
+      <div className="flex justify-between items-center mb-6">
+        <nav className="max-w-3/4 flex justify-start">
+          {/* Default All Category */}
           <Tab
-            key={t._id}
-            tab={t}
+            tab={{
+              _id: "none",
+              category: "All",
+            }}
             activeTab={activeTab}
-            setActiveTab={setActiveTab}
+            setActiveTab={() => setActiveTab(allCategory)}
           />
-        ))}
-      </nav>
-      <button
-        onClick={() => setShowModal(true)}
-        className="bg-violet-900 hover:bg-violet-700 text-white py-2 px-3 rounded-md text-sm"
-      >
-        Add Topic
-      </button>
+          {/* Rest of Categories */}
+          {categories.map((t: Category) => (
+            <Tab
+              key={t._id}
+              tab={t}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+            />
+          ))}
+        </nav>
+        <button
+          onClick={() => setShowModal(true)}
+          className="bg-violet-900 hover:bg-violet-700 text-white py-2 px-3 rounded-md text-sm"
+        >
+          Add Topic
+        </button>
+      </div>
     </div>
   );
 };
@@ -143,9 +146,9 @@ export const Tab = ({
       onClick={() => setActiveTab(tab)}
       className={`${
         activeTab?.category === tab?.category
-          ? "font-bold border-b-2 border-purple-900"
+          ? "font-bold border-b-2 border-violet-900"
           : "font-normal border-b-2 border-transparent"
-      } text-purple-900 cursor-pointer hover:text-purple-700 px-4 py-2`}
+      } text-violet-900 cursor-pointer hover:text-violet-700 px-4 py-2`}
     >
       {tab?.category}
     </span>

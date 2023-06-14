@@ -27,7 +27,7 @@ const Article = ({ article }: { article: Blog }) => {
       </h5>
       <div className="flex gap-2 mb-4">
         {article.keywords.map((k) => (
-          <span className="border border-purple-700 text-purple-900 rounded-md px-1.5 py-1 text-xs">
+          <span className="border border-violet-700 text-violet-900 rounded-md px-1.5 py-1 text-xs">
             {k.keyword}
           </span>
         ))}

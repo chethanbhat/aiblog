@@ -83,7 +83,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
   return (
     <div className="w-full">
       <div className="flex justify-between">
-        <h1 className="font-medium mb-8 text-gray-500">
+        <h1 className="text-xl font-semibold mb-4 text-gray-600">
           Write / Generate Blog
         </h1>
         <Link to="/">Back</Link>
@@ -98,7 +98,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
       </h5>
       <div className="flex gap-2 mb-4">
         {topic.keywords.map((k) => (
-          <span className="border border-purple-700 text-purple-900 rounded-md px-1.5 py-1 text-xs">
+          <span className="border border-violet-700 text-violet-900 rounded-md px-1.5 py-1 text-xs">
             {k.keyword}
           </span>
         ))}
@@ -141,7 +141,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
       <button
         onClick={createBlog}
         disabled={!imageAsset || article === ""}
-        className="w-[250px]  bg-purple-900 disabled:bg-gray-200 disabled:text-black disabled:cursor-not-allowed text-white px-2 py-1.5 rounded block shadow-sm"
+        className="w-[250px]  bg-violet-900 hover:bg-violet-700 disabled:bg-gray-200 disabled:text-black disabled:cursor-not-allowed text-white px-2 py-1.5 rounded block shadow-sm"
       >
         Create Blog
       </button>
