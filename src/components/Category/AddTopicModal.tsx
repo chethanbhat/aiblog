@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getKeywordsQuery, sanityClient } from "../../utils";
 import { Category } from "./CategoryHome";
+import Spinner from "../Layout/Spinner";
 
 export interface Keyword {
   _id: string;
@@ -16,6 +17,7 @@ const AddTopicModal = ({
   activeCategory: Category;
   cancel: () => void;
 }) => {
+  const [loading, setLoading] = useState(true);
   const [topic, setTopic] = useState("");
   const [allKeywords, setAllKeywords] = useState<Keyword[]>([]);
   const [selectedKeywords, setSelectedKeywords] = useState<Keyword[]>([]);
@@ -29,9 +31,10 @@ const AddTopicModal = ({
   }, []);
 
   const getKeywords = async () => {
+    setLoading(true);
     const _keywords = await sanityClient.fetch(getKeywordsQuery);
-    console.log(_keywords);
     setAllKeywords(_keywords);
+    setLoading(false);
   };
 
   const addNewKeyword = async () => {
@@ -108,6 +111,7 @@ const AddTopicModal = ({
           {/* Keywords */}
           <div className="mb-4">
             <label className="block mb-2">Keywords (select atleast one)</label>
+            {loading && <Spinner />}
             <div className="flex flex-wrap gap-4">
               {allKeywords.map((k: Keyword) => (
                 <span
@@ -133,7 +137,7 @@ const AddTopicModal = ({
                       : "bg-gray-200 text-black"
                   } rounded-md px-1.5 py-1 cursor-pointer`}
                 >
-                  {k.keyword}
+                  {k.keyword.toLocaleLowerCase()}
                 </span>
               ))}
             </div>
