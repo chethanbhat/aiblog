@@ -9,7 +9,7 @@ const Sidebar = () => {
     <aside className="w-1/6 h-full p-6 bg-violet-900 text-white flex flex-col">
       {/* Brand */}
       <Link to="/" className="h-[150px] text-xl font-bold hover:text-amber-300">
-        AI Blog Generator
+        AI Blog Writer
       </Link>
       {/* Menu */}
       <nav>
