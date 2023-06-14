@@ -56,7 +56,7 @@ const EditorTextArea = ({
 
   return (
     <textarea
-      className="w-full h-[250px] overflow-y-auto rounded-md border border-gray-200 p-4"
+      className="w-full h-[200px] overflow-y-auto rounded-md border border-gray-200 p-4"
       value={article}
       ref={textareaRef}
       onChange={handleChange}

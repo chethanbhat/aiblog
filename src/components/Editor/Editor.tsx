@@ -1,16 +1,58 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Topic } from "../../types";
 import { useState } from "react";
-import { openAIClient } from "../../utils";
+import { openAIClient, sanityClient } from "../../utils";
 import Spinner from "../Layout/Spinner";
 import EditorTextArea from "./EditorTextArea";
 import MoodBox from "./MoodBox";
+import ImageUploader from "./ImageUploader";
+import { useUser } from "../../context";
 
 const Editor = ({ topic }: { topic: Topic | null }) => {
   const [article, setArticle] = useState("");
   const [mood, setMood] = useState("none");
-
+  const [imageAsset, setImageAsset] = useState<any>(null);
   const [generating, setGenerating] = useState(false);
+  const { user } = useUser();
+  const navigate = useNavigate();
+
+  const createBlog = async () => {
+    if (user && topic && article && imageAsset?._id) {
+      await sanityClient
+        .create({
+          _type: "blog",
+          article: article,
+          image: {
+            _type: "image",
+            asset: {
+              _type: "reference",
+              _ref: imageAsset?._id,
+            },
+          },
+          topic: {
+            _type: "reference",
+            _ref: topic?._id,
+          },
+          keywords: topic?.keywords.map((sk) => {
+            return { _type: "reference", _ref: sk._id, _key: sk._id };
+          }),
+          category: {
+            _type: "reference",
+            _ref: topic?.category._id,
+          },
+          createdBy: {
+            _type: "reference",
+            _ref: user?.id,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          // Close Modal
+          navigate("/");
+        })
+        .catch((err) => console.log("something went wrong => ", err));
+    }
+  };
 
   const generateBlog = async () => {
     setGenerating(true);
@@ -92,14 +134,14 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
 
       {/* Image Upload  */}
       <div className="mb-4">
-        <label className="block mb-2">Featured Image</label>
-        <input type="file" name="" id="" />
+        <ImageUploader imageAsset={imageAsset} setImageAsset={setImageAsset} />
       </div>
 
       {/* Button */}
       <button
-        disabled
-        className="bg-purple-900 disabled:bg-gray-200 disabled:text-black disabled:cursor-not-allowed text-white px-2 py-1.5 rounded block ml-auto shadow-sm"
+        onClick={createBlog}
+        disabled={!imageAsset || article === ""}
+        className="w-[250px]  bg-purple-900 disabled:bg-gray-200 disabled:text-black disabled:cursor-not-allowed text-white px-2 py-1.5 rounded block mx-auto shadow-sm"
       >
         Create Blog
       </button>
