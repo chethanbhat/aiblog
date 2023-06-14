@@ -19,8 +19,6 @@ const ArticleList = () => {
     setLoading(false);
   };
 
-  console.log(articles);
-
   if (loading) {
     return <Spinner />;
   }

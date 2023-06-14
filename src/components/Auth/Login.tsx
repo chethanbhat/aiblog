@@ -35,7 +35,6 @@ const Login = () => {
         }
       );
       const _user = await res.data;
-      console.log("user => ", _user);
       sanityClient
         .createIfNotExists({
           _type: "user",

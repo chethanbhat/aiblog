@@ -23,10 +23,8 @@ const Write = () => {
     try {
       const _topic = await sanityClient.fetch(getTopicByIDQuery(topicID));
       setTopic(_topic[0]);
-      console.log(_topic[0]);
       setLoading(false);
     } catch (error) {
-      console.log("Topic not found");
       navigate("/");
       setLoading(false);
     }
