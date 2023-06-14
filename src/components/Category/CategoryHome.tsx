@@ -20,6 +20,7 @@ const CategoryHome = () => {
   const [showModal, setShowModal] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
+  const [topicsLoading, setTopicsLoading] = useState(false);
   const [topics, setTopics] = useState<Topic[]>([]);
 
   useEffect(() => {
@@ -31,25 +32,31 @@ const CategoryHome = () => {
   }, [categories, activeTab, showModal]);
 
   const getCategories = async () => {
+    setLoading(true);
     const _categories = await sanityClient.fetch(getCategoriesQuery);
     setCategories(_categories);
+    setLoading(false);
   };
 
   const getTopics = async () => {
-    setLoading(true);
+    setTopicsLoading(true);
     const _topics = await sanityClient.fetch(
       activeTab._id === "000"
         ? getTopicsQuery
         : getTopicsByCategoryQuery(activeTab._id)
     );
     setTopics(_topics);
-    setLoading(false);
+    setTopicsLoading(false);
   };
 
   const deleteTopic = async (topicID: string) => {
     await sanityClient.delete(topicID);
     getTopics();
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="w-full h-full">
@@ -67,7 +74,7 @@ const CategoryHome = () => {
           setActiveTab={setActiveTab}
           setShowModal={setShowModal}
         />
-        {loading ? (
+        {topicsLoading ? (
           <Spinner />
         ) : (
           <TopicList topics={topics} deleteTopic={deleteTopic} />

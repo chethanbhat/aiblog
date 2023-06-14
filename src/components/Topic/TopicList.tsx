@@ -19,7 +19,7 @@ const TopicList = ({
           >
             <span
               onClick={() => deleteTopic(t._id)}
-              className="absolute w-4 h-4 flex justify-center items-center top-[1%] left-[98.5%] rounded-full p-1 text-sm text-gray-400 font-bold cursor-pointer"
+              className="absolute w-4 h-4 flex justify-center items-center top-[1%] left-[98.5%] rounded-full p-1 text-sm text-gray-400 hover:text-red-600 font-bold cursor-pointer"
             >
               x
             </span>

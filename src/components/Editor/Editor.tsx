@@ -81,7 +81,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
     return <></>;
   }
   return (
-    <div className="w-full h-full">
+    <div className="w-full">
       <div className="flex justify-between">
         <h1 className="font-medium mb-8 text-gray-500">
           Write / Generate Blog
@@ -133,7 +133,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
       </div>
 
       {/* Image Upload  */}
-      <div className="mb-4">
+      <div className="mb-8">
         <ImageUploader imageAsset={imageAsset} setImageAsset={setImageAsset} />
       </div>
 
@@ -141,7 +141,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
       <button
         onClick={createBlog}
         disabled={!imageAsset || article === ""}
-        className="w-[250px]  bg-purple-900 disabled:bg-gray-200 disabled:text-black disabled:cursor-not-allowed text-white px-2 py-1.5 rounded block mx-auto shadow-sm"
+        className="w-[250px]  bg-purple-900 disabled:bg-gray-200 disabled:text-black disabled:cursor-not-allowed text-white px-2 py-1.5 rounded block shadow-sm"
       >
         Create Blog
       </button>
