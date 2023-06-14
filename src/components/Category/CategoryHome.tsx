@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
-import { getCategoriesQuery, sanityClient } from "../../utils";
+import {
+  getCategoriesQuery,
+  getTopicsByCategoryQuery,
+  getTopicsQuery,
+  sanityClient,
+} from "../../utils";
 import AddTopicModal from "./AddTopicModal";
-
-export interface Category {
-  _id: string;
-  category: string;
-}
+import { Category, Topic } from "../../types";
+import TopicList from "../Topic/TopicList";
+import Spinner from "../Layout/Spinner";
 
 const allCategory = {
   _id: "000",
@@ -16,18 +19,40 @@ const CategoryHome = () => {
   const [activeTab, setActiveTab] = useState<Category>(allCategory);
   const [showModal, setShowModal] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [topics, setTopics] = useState<Topic[]>([]);
 
   useEffect(() => {
     getCategories();
   }, []);
+
+  useEffect(() => {
+    getTopics();
+  }, [categories, activeTab, showModal]);
 
   const getCategories = async () => {
     const _categories = await sanityClient.fetch(getCategoriesQuery);
     setCategories(_categories);
   };
 
+  const getTopics = async () => {
+    setLoading(true);
+    const _topics = await sanityClient.fetch(
+      activeTab._id === "000"
+        ? getTopicsQuery
+        : getTopicsByCategoryQuery(activeTab._id)
+    );
+    setTopics(_topics);
+    setLoading(false);
+  };
+
+  const deleteTopic = async (topicID: string) => {
+    await sanityClient.delete(topicID);
+    getTopics();
+  };
+
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       {showModal && (
         <AddTopicModal
           activeCategory={activeTab._id === "000" ? categories[0] : activeTab}
@@ -35,12 +60,19 @@ const CategoryHome = () => {
           cancel={() => setShowModal(false)}
         />
       )}
-      <CategoryTabs
-        categories={categories}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        setShowModal={setShowModal}
-      />
+      <div className="h-full flex flex-col">
+        <CategoryTabs
+          categories={categories}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          setShowModal={setShowModal}
+        />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <TopicList topics={topics} deleteTopic={deleteTopic} />
+        )}
+      </div>
     </div>
   );
 };
@@ -59,7 +91,7 @@ export const CategoryTabs = ({
   setShowModal: (val: boolean) => void;
 }) => {
   return (
-    <div className="w-full flex justify-between items-center">
+    <div className="w-full flex justify-between items-center mb-6">
       <nav className="w-3/4 flex justify-evenly">
         {/* Default All Category */}
         <Tab
@@ -72,7 +104,12 @@ export const CategoryTabs = ({
         />
         {/* Rest of Categories */}
         {categories.map((t: Category) => (
-          <Tab tab={t} activeTab={activeTab} setActiveTab={setActiveTab} />
+          <Tab
+            key={t._id}
+            tab={t}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         ))}
       </nav>
       <button

@@ -13,3 +13,10 @@ export interface UserInterface {
   email: string;
   image: string;
 }
+
+export interface Topic {
+  _id: string;
+  title: string;
+  category: Category;
+  keywords: Keyword[];
+}

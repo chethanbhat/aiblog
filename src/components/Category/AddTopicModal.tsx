@@ -70,7 +70,7 @@ const AddTopicModal = ({
     <div className="min-w-full min-h-screen fixed top-0 left-0 overflow-hidden bg-gray-900/20 flex justify-center items-center z-[100]">
       <div
         className={
-          "w-[576px] min-h-[452px] bg-white shadow-lg rounded-2xl overflow-hidden z-[50] flex flex-col"
+          "w-[640px] min-h-[452px] bg-white shadow-lg rounded-2xl overflow-hidden z-[50] flex flex-col"
         }
       >
         <div className="bg-violet-900 p-4 text-white">
@@ -104,10 +104,10 @@ const AddTopicModal = ({
             </select>
           </div>
           {/* Keywords */}
-          <div className="mb-4">
+          <div className="mb-8">
             <label className="block mb-2">Keywords (select atleast one)</label>
             {loading && <Spinner />}
-            <div className="flex flex-wrap gap-4">
+            <div className="max-h-[250px] overflow-y-auto flex flex-wrap gap-2">
               {allKeywords.map((k: Keyword) => (
                 <span
                   onClick={() => {
@@ -121,7 +121,7 @@ const AddTopicModal = ({
                       });
                     } else {
                       setSelectedKeywords((prev) => {
-                        return [...prev, k];
+                        return [k, ...prev];
                       });
                     }
                   }}
@@ -130,7 +130,7 @@ const AddTopicModal = ({
                     selectedKeywords.map((sk) => sk.keyword).includes(k.keyword)
                       ? "bg-purple-700 text-white"
                       : "bg-gray-200 text-black"
-                  } rounded-md px-1.5 py-1 cursor-pointer`}
+                  } rounded-md px-1.5 py-1 cursor-pointer text-xs self-center`}
                 >
                   {k.keyword.toLocaleLowerCase()}
                 </span>
