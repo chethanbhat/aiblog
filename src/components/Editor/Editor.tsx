@@ -1,59 +1,16 @@
 import { Link } from "react-router-dom";
 import { Topic } from "../../types";
-import { useState, useEffect, KeyboardEvent, ChangeEvent, useRef } from "react";
+import { useState } from "react";
 import { openAIClient } from "../../utils";
 import Spinner from "../Layout/Spinner";
+import EditorTextArea from "./EditorTextArea";
+import MoodBox from "./MoodBox";
 
 const Editor = ({ topic }: { topic: Topic | null }) => {
   const [article, setArticle] = useState("");
   const [mood, setMood] = useState("none");
-  const [undoStack, setUndoStack] = useState<string[]>([]);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
   const [generating, setGenerating] = useState(false);
-
-  // Undo the last change
-  const undo = () => {
-    if (undoStack.length > 0) {
-      const lastText = undoStack.pop();
-      setArticle(lastText || "");
-
-      if (lastText) {
-        const newTextAreaValue = textareaRef.current?.value.replace(
-          lastText,
-          ""
-        );
-        textareaRef.current!.value = newTextAreaValue || "";
-      }
-    }
-  };
-
-  useKeyboardShortcut("z", undo);
-
-  // Update undo stack when article changes
-  useEffect(() => {
-    setUndoStack((prevState) => [...prevState, article]);
-  }, [article]);
-
-  // Handle text input
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = event.target.value;
-    const lastChange = undoStack[undoStack.length - 1];
-
-    if (lastChange && newValue.endsWith(lastChange)) {
-      // If the new value ends with the last change, update the last change in the stack
-      setUndoStack((prevState) => {
-        const updatedStack = [...prevState];
-        updatedStack[updatedStack.length - 1] =
-          lastChange + newValue.substring(lastChange.length);
-        return updatedStack;
-      });
-    } else {
-      // Otherwise, add the new change to the stack
-      setUndoStack((prevState) => [...prevState, newValue]);
-    }
-
-    setArticle(newValue);
-  };
 
   const generateBlog = async () => {
     setGenerating(true);
@@ -106,75 +63,15 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
       </div>
       {/* Editor */}
       <div className="mb-4">
-        <textarea
-          className="w-full h-[250px] overflow-y-auto rounded-md border border-gray-200 p-4"
-          value={article}
-          ref={textareaRef}
-          onChange={handleChange}
-        />
+        <EditorTextArea article={article} setArticle={setArticle} />
       </div>
       {/* AI Prompt */}
 
       <div className="mb-4">
         <label className="block mb-2">Mood of the Article</label>
         {/* Moods */}
-        <div className="flex items-center gap-2 mb-4">
-          <div className="flex items-center">
-            <input
-              checked={mood === "none"}
-              onChange={(e) => setMood(e.target.value)}
-              value="none"
-              className="mr-2 cursor-pointer"
-              type="radio"
-              name="blogMood"
-            />
-            <label>None</label>
-          </div>
-          <div className="flex items-center">
-            <input
-              checked={mood === "happy"}
-              onChange={(e) => setMood(e.target.value)}
-              value="happy"
-              className="mr-2 cursor-pointer"
-              type="radio"
-              name="blogMood"
-            />
-            <label>Happy</label>
-          </div>
-          <div className="flex items-center">
-            <input
-              checked={mood === "sad"}
-              onChange={(e) => setMood(e.target.value)}
-              value="sad"
-              className="mr-2 cursor-pointer"
-              type="radio"
-              name="blogMood"
-            />
-            <label>Sad</label>
-          </div>
-          <div className="flex items-center">
-            <input
-              checked={mood === "angry"}
-              onChange={(e) => setMood(e.target.value)}
-              value="angry"
-              className="mr-2 cursor-pointer"
-              type="radio"
-              name="blogMood"
-            />
-            <label>Angry</label>
-          </div>
-          <div className="flex items-center">
-            <input
-              checked={mood === "funny"}
-              onChange={(e) => setMood(e.target.value)}
-              value="funny"
-              className="mr-2 cursor-pointer"
-              type="radio"
-              name="blogMood"
-            />
-            <label>Funny</label>
-          </div>
-        </div>
+        <MoodBox selectedMood={mood} setMood={setMood} />
+        {/* Blog Generator Button */}
         <button
           disabled={generating}
           onClick={() => generateBlog()}
@@ -211,26 +108,3 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
 };
 
 export default Editor;
-
-const useKeyboardShortcut = (targetKey: string, callback: () => void) => {
-  const savedCallback = useRef<() => void>();
-
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === targetKey && (event.ctrlKey || event.metaKey)) {
-        event.preventDefault();
-        savedCallback.current?.();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown as any);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown as any);
-    };
-  }, [targetKey]);
-};
