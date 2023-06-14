@@ -72,4 +72,24 @@ export const getTopicByIDQuery = (topicID: string) => {
 };
 
 // Get Blog
-export const getBlogQuery = `*[_type == "blog"]`;
+export const getBlogQuery = `*[_type == "blog"] | order(_createdAt desc) {
+  _id,
+  article,
+  "imageUrl": image.asset._ref,
+  topic-> {
+    title
+  },
+  category->{
+    category
+  },
+  keywords[]->{
+    _id,
+    keyword
+  },
+  createdBy->{
+    username,
+    email,
+    image,
+    "id": _id
+  }
+} `;

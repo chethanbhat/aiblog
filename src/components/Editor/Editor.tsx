@@ -48,7 +48,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
         .then((res) => {
           console.log(res);
           // Close Modal
-          navigate("/");
+          navigate("/blog");
         })
         .catch((err) => console.log("something went wrong => ", err));
     }
@@ -98,7 +98,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
       </h5>
       <div className="flex gap-2 mb-4">
         {topic.keywords.map((k) => (
-          <span className="border border-purple-700 text-purple-900 rounded-md px-1.5 py-1 cursor-pointer text-xs">
+          <span className="border border-purple-700 text-purple-900 rounded-md px-1.5 py-1 text-xs">
             {k.keyword}
           </span>
         ))}

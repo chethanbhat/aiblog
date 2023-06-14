@@ -20,3 +20,13 @@ export interface Topic {
   category: Category;
   keywords: Keyword[];
 }
+
+export interface Blog {
+  _id: string;
+  article: string;
+  imageUrl: string;
+  topic: Topic;
+  category: Category;
+  keywords: Keyword[];
+  createdBy: UserInterface;
+}
