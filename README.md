@@ -8,6 +8,7 @@ AI Blog Writer is built with following technologies.
 - UI library [TailwindCSS](https://tailwindcss.com/)
 - Backend & CMS [Sanity](https://www.sanity.io/)
 - AI Prompt Generation using [OpenAI](https://openai.com/)
+- Querying and Caching using [TanStack Query](https://tanstack.com/query/latest)
 - Google Login
 - TypeScript
 
