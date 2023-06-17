@@ -38,6 +38,12 @@ export const getTopicsQuery = `*[_type == "topic"] | order(_createdAt desc){
   keywords[]->{
     _id,
     keyword
+  },
+  createdBy->{
+    username,
+    email,
+    image,
+    "id": _id
   }
 }`;
 
@@ -53,6 +59,12 @@ export const getTopicsByCategoryQuery = (
     keywords[]->{
       _id,
       keyword
+    },
+    createdBy->{
+      username,
+      email,
+      image,
+      "id": _id
     }
   }`;
 // Get Topic by ID
@@ -67,6 +79,12 @@ export const getTopicByIDQuery = (topicID: string) => {
     keywords[]->{
       _id,
       keyword
+    },
+    createdBy->{
+      username,
+      email,
+      image,
+      "id": _id
     }
   } `;
 };

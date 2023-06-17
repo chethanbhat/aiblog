@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Topic } from "../../types";
 import { DeleteIcon, PencilIcon } from "../Icons/SVGIcons";
+import { useUser } from "../../context";
 
 const TopicList = ({
   topics,
@@ -9,6 +10,7 @@ const TopicList = ({
   topics: Topic[];
   deleteTopic: (id: string) => void;
 }) => {
+  const { user } = useUser();
   return (
     <div className="w-full pr-4 flex-1 overflow-y-auto">
       {topics.length > 0 ? (
@@ -18,12 +20,15 @@ const TopicList = ({
             key={t._id}
             className="bg-white rounded-md mb-4 p-4 flex justify-between relative shadow"
           >
-            <span
-              onClick={() => deleteTopic(t._id)}
-              className="absolute flex justify-center items-center top-[2%] left-[90%] md:left-[98%] rounded-full p-1 text-sm text-gray-500 hover:text-red-600 font-bold cursor-pointer"
-            >
-              <DeleteIcon />
-            </span>
+            {user?.id === t?.createdBy?.id && (
+              <span
+                onClick={() => deleteTopic(t._id)}
+                className="absolute flex justify-center items-center top-[2%] left-[90%] md:left-[98%] rounded-full p-1 text-sm text-gray-500 hover:text-red-600 font-bold cursor-pointer"
+              >
+                <DeleteIcon />
+              </span>
+            )}
+
             <div className="flex-1">
               <h3 className="mb-4 text-sm md:text-base">{t.title}</h3>
               <div className="gap-2 hidden md:flex">

@@ -19,6 +19,7 @@ export interface Topic {
   title: string;
   category: Category;
   keywords: Keyword[];
+  createdBy: UserInterface;
 }
 
 export interface Blog {
