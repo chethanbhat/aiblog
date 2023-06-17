@@ -37,7 +37,7 @@ export const Mood = ({
         type="radio"
         name="blogMood"
       />
-      <label className="capitalize">{mood}</label>
+      <label className="capitalize text-sm md:text-base">{mood}</label>
     </div>
   );
 };

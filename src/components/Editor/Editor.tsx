@@ -84,16 +84,18 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
   return (
     <div className="w-full">
       <div className="flex justify-between">
-        <h1 className="text-xl font-semibold mb-4 text-gray-600">
+        <h1 className="text-sm md:text-xl font-semibold mb-2 md:mb-4 text-gray-600">
           Write / Generate Blog
         </h1>
-        <Link to="/">Back</Link>
+        <Link className="text-xs md:text-base" to="/">
+          Back
+        </Link>
       </div>
 
-      <h2 className="text-2xl text-gray-600 font-semibold mb-4">
+      <h2 className="text-base md:text-2xl text-gray-600 font-semibold mb-2 md:mb-4">
         {topic.title}
       </h2>
-      <h5 className="text-sm mb-4">
+      <h5 className="text-sm mb-2 md:mb-4">
         Category:{" "}
         <span className="font-semibold">{topic.category.category}</span>
       </h5>
@@ -111,14 +113,16 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
       {/* AI Prompt */}
 
       <div className="mb-4">
-        <label className="block mb-2">Mood of the Article</label>
+        <label className="text-sm md:text-base block mb-2">
+          Mood of the Article
+        </label>
         {/* Moods */}
         <MoodBox selectedMood={mood} setMood={setMood} />
         {/* Blog Generator Button */}
         <button
           disabled={generating}
           onClick={() => generateBlog()}
-          className="flex items-center bg-amber-300 text-black px-2 py-1.5 rounded shadow-sm disabled:bg-amber-100 disabled:cursor-pointer"
+          className="text-sm md:text-base flex items-center bg-amber-300 text-black px-2 py-1.5 rounded shadow-sm disabled:bg-amber-100 disabled:cursor-pointer"
         >
           {generating ? (
             <span className="flex items-center">
@@ -139,7 +143,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
       </div>
 
       {/* Image Upload  */}
-      <div className="mb-8">
+      <div className="mb-4 md:mb-8">
         <ImageUploader imageAsset={imageAsset} setImageAsset={setImageAsset} />
       </div>
 
@@ -147,7 +151,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
       <button
         onClick={createBlog}
         disabled={!imageAsset || article === ""}
-        className="w-[250px] flex justify-center items-center  bg-violet-900 hover:bg-violet-700 disabled:bg-gray-200 disabled:text-black disabled:cursor-not-allowed text-white px-2 py-1.5 rounded shadow-sm"
+        className="w-full md:w-[250px] text-sm md:text-base flex justify-center items-center  bg-violet-900 hover:bg-violet-700 disabled:bg-gray-200 disabled:text-black disabled:cursor-not-allowed text-white px-2 py-1.5 rounded shadow-sm"
       >
         <span className="mr-2">
           <WriteIcon />

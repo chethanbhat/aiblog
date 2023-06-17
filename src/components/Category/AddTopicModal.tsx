@@ -70,19 +70,19 @@ const AddTopicModal = ({
     <div className="min-w-full min-h-screen fixed top-0 left-0 overflow-hidden bg-gray-900/20 flex justify-center items-center z-[100]">
       <div
         className={
-          "w-[640px] min-h-[452px] bg-white shadow-lg rounded-2xl overflow-hidden z-[50] flex flex-col"
+          "w-[90%] md:w-[640px] min-h-[250px] md:min-h-[452px] overflow-y-auto bg-white shadow-lg rounded-2xl overflow-hidden z-[50] flex flex-col"
         }
       >
-        <div className="bg-violet-900 p-4 text-white">
+        <div className="bg-violet-900 p-2 md:p-4 text-white">
           <h3 className="text-center">Add a topic</h3>
         </div>
-        <div className="p-6 flex-1">
+        <div className="p-4 md:p-6 flex-1">
           {/* Topic */}
           <div className="mb-4">
-            <label className="block mb-2">Topic</label>
+            <label className="block mb-2 text-sm md:text-base">Topic</label>
             <input
               autoFocus
-              className="border border-gray-400 rounded-lg p-2 block w-full"
+              className="border border-gray-400 rounded-lg p-1 md:p-2 block w-full text-sm md:text-base"
               type="text"
               placeholder="Add topic title"
               onChange={(e) => setTopic(e.target.value)}
@@ -90,9 +90,9 @@ const AddTopicModal = ({
           </div>
           {/* Category */}
           <div className="mb-4">
-            <label className="block mb-2">Category</label>
+            <label className="block mb-2 text-sm md:text-base">Category</label>
             <select
-              className="w-1/3 border border-gray-400 rounded-lg p-2"
+              className="w-full md:w-1/3 border border-gray-400 rounded-lg p-1 md:p-2 text-sm md:text-base"
               onChange={(e) => setSelectedCategory(e.target.value)}
               defaultValue={selectedCategory}
             >
@@ -105,9 +105,11 @@ const AddTopicModal = ({
           </div>
           {/* Keywords */}
           <div className="mb-8">
-            <label className="block mb-2">Keywords (select atleast one)</label>
+            <label className="block mb-2 text-sm md:text-base">
+              Keywords (select atleast one)
+            </label>
             {loading && <Spinner />}
-            <div className="max-h-[250px] overflow-y-auto flex flex-wrap gap-2">
+            <div className="max-h-[100px] md:max-h-[250px] overflow-y-auto flex flex-wrap gap-2">
               {allKeywords.map((k: Keyword) => (
                 <span
                   onClick={() => {
@@ -138,13 +140,13 @@ const AddTopicModal = ({
             </div>
           </div>
           {/* Keywords */}
-          <div className="mb-4 flex items-center">
-            <label className="mr-4">Add Keyword</label>
+          <div className="mb-4 flex flex-wrap items-center">
+            <label className="mr-4 text-sm md:text-base">Add Keyword</label>
             <input
               value={newKeyword}
               onChange={(e) => setNewKeyword(e.target.value)}
               type="text"
-              className="w-[250px] border-b border-gray-400 focus:ring-0 focus:outline-none"
+              className="w-full md:w-[250px] border-b border-gray-400 focus:ring-0 focus:outline-none text-sm md:text-base"
             />
             <button
               onClick={() => {
@@ -156,23 +158,23 @@ const AddTopicModal = ({
                   addNewKeyword();
                 }
               }}
-              className="bg-violet-200 font-bold w-8 h-8 px-1 py-1 ml-4 flex justify-center items-center"
+              className="bg-violet-200 font-bold mt-4 md:mt-0 md:ml-4 w-[50px] md:w-8 md:h-8 px-1 py-1 flex justify-center items-center"
             >
               +
             </button>
           </div>
         </div>
-        <div className="flex justify-end items-center p-4">
+        <div className="flex justify-end items-center p-2 md:p-4">
           <button
             onClick={cancel}
-            className="bg-gray-400 hover:bg-gray-600  text-white shadow-lg text-sm px-2 py-1.5 rounded-md mr-6"
+            className="bg-gray-400 hover:bg-gray-600  text-white shadow-lg text-xs md:text-sm px-2 py-1.5 rounded-md mr-6"
           >
             Cancel
           </button>
           <button
             disabled={topic.length < 1 || selectedKeywords.length < 1}
             onClick={addNewTopic}
-            className="bg-violet-900 disabled:bg-violet-50 disabled:text-black disabled:cursor-not-allowed    hover:bg-violet-700 shadow-lg text-white text-sm px-2 py-1.5 rounded-md"
+            className="bg-violet-900 disabled:bg-violet-50 disabled:text-black disabled:cursor-not-allowed    hover:bg-violet-700 shadow-lg text-white text-xs md:text-sm px-2 py-1.5 rounded-md"
           >
             Add Topic
           </button>

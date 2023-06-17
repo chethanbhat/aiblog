@@ -3,8 +3,8 @@ import { urlFor } from "../../utils";
 
 const Article = ({ article }: { article: Blog }) => {
   return (
-    <div className="w-[360px] p-4 rounded-md bg-white mb-8">
-      <h2 className="text-xl text-gray-600 font-medium mb-4">
+    <div className="w-[360px] p-4 rounded-md bg-white mb-2 md:mb-8">
+      <h2 className="text-base md:text-xl text-gray-600 font-medium mb-4">
         {article.topic.title}
       </h2>
       <h5 className="text-sm mb-2 flex items-center">
@@ -27,7 +27,7 @@ const Article = ({ article }: { article: Blog }) => {
       </h5>
       <div className="flex gap-2 mb-4">
         {article.keywords.map((k) => (
-          <span className="border border-violet-700 text-violet-900 rounded-md px-1.5 py-1 text-xs">
+          <span className="lowercase border border-violet-700 text-violet-900 rounded-md px-1.5 py-1 text-xs">
             {k.keyword}
           </span>
         ))}

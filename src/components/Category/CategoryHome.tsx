@@ -100,9 +100,11 @@ export const CategoryTabs = ({
 }) => {
   return (
     <div className="w-full">
-      <h3 className="text-xl font-semibold mb-4 text-gray-600">Categories</h3>
-      <div className="flex justify-between items-center mb-6">
-        <nav className="max-w-3/4 flex justify-start">
+      <h3 className="text-sm md:text-xl font-semibold mb-2 md:mb-4 text-gray-600">
+        Categories
+      </h3>
+      <div className="flex flex-wrap justify-between items-center mb-6">
+        <nav className="max-w-full md:max-w-3/4 flex flex-wrap justify-start">
           {/* Default All Category */}
           <Tab
             tab={{
@@ -124,7 +126,7 @@ export const CategoryTabs = ({
         </nav>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-violet-900 hover:bg-violet-700 text-white py-2 px-3 rounded-md text-sm flex items-center"
+          className="mt-4 md:mt-0 bg-violet-900 hover:bg-violet-700 text-white py-2 px-3 rounded-md text-xs md:text-sm flex items-center"
         >
           <span className="mr-2">
             <WriteIcon />{" "}
@@ -152,7 +154,7 @@ export const Tab = ({
         activeTab?.category === tab?.category
           ? "font-bold border-b-2 border-violet-900"
           : "font-normal border-b-2 border-transparent"
-      } text-violet-900 cursor-pointer hover:text-violet-700 px-4 py-2`}
+      } text-violet-900 cursor-pointer hover:text-violet-700 text-sm md:text-base px-2 md:px-4 py-2`}
     >
       {tab?.category}
     </span>

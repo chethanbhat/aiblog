@@ -14,11 +14,11 @@ const Sidebar = () => {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
   return (
-    <aside className="w-1/6 h-full p-6 bg-violet-900 text-white flex flex-col">
+    <aside className="h-full flex p-4 md:p-6 bg-violet-900 text-white flex-col">
       {/* Brand */}
       <Link
         to="/"
-        className="h-[150px] text-xl font-bold hover:text-amber-300 flex items-center"
+        className="h-[150px] text-lg md:text-xl font-bold hover:text-amber-300 flex items-center"
       >
         <span className="mr-2">
           <LogoIcon />
@@ -46,7 +46,7 @@ const Sidebar = () => {
       </nav>
       {/* Footer */}
       <div className="flex-1 flex flex-col justify-end">
-        <div className="pb-6 mb-6 border-b border-blue-100 flex items-center">
+        <div className="pb-6 mb-6 border-b border-blue-100 flex items-center text-sm md:text-sm">
           <img
             src={user?.image}
             alt={user?.username}
@@ -58,7 +58,7 @@ const Sidebar = () => {
           className="hover:text-amber-300 group"
           href="https://github.com/chethanbhat/aiblog"
         >
-          <h5 className="flex items-center mb-4">
+          <h5 className="flex items-center mb-4 text-xs md:text-base">
             Star this Project on
             <span className="mx-2">
               <GitHubIcon />
@@ -66,7 +66,10 @@ const Sidebar = () => {
           </h5>
         </a>
 
-        <a className="hover:text-amber-300" href="https://chethanbhat.com">
+        <a
+          className="hover:text-amber-300 text-xs md:text-base"
+          href="https://chethanbhat.com"
+        >
           @2023 - chethanbhat.com
         </a>
       </div>
@@ -88,7 +91,7 @@ export const MenuItem = ({
   return (
     <NavLink
       className={({ isActive }) =>
-        `mb-4 flex items-center  ${
+        `mb-4 text-sm md:text-base flex items-center  ${
           isActive
             ? `font-semibold text-amber-300`
             : `text-white hover:text-amber-300`

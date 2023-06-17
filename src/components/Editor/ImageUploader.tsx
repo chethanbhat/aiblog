@@ -37,7 +37,7 @@ const ImageUploader = ({
 
   return (
     <div>
-      <label className="block mb-2">Featured Image</label>
+      <label className="block mb-2 text-sm md:text-base">Featured Image</label>
       {wrongImageType && <p className="text-red-600 my-2">Wrong image type!</p>}
       <div className="mb-2">
         <input
@@ -46,7 +46,9 @@ const ImageUploader = ({
           name="upload-image"
           onChange={uploadImage}
         />
-        <small>Use high-quality JPG, SVG, PNG, GIF less than 20 MB</small>
+        <small className="text-xs md:text-sm">
+          Use high-quality JPG, SVG, PNG, GIF less than 20 MB
+        </small>
       </div>
     </div>
   );
