@@ -5,32 +5,45 @@ import { useEffect, useState } from "react";
 import { Topic } from "../types";
 import { getTopicByIDQuery, sanityClient } from "../utils";
 import Spinner from "../components/Layout/Spinner";
+import { useQuery } from "@tanstack/react-query";
 
 const Write = () => {
   const [topic, setTopic] = useState<Topic | null>(null);
-  const [loading, setLoading] = useState(false);
   const { topicID } = useParams();
   const navigate = useNavigate();
 
+  // Fetch Topics using React Query
+  const {
+    isLoading: isTopicLoading,
+    error: topicError,
+    data: topicData,
+  } = useQuery({
+    queryKey: ["fetchTopicByID", topicID],
+    queryFn: async () => {
+      if (topicID) {
+        let result: Topic[] = await sanityClient.fetch(
+          getTopicByIDQuery(topicID)
+        );
+        return result;
+      } else {
+        throw Error;
+      }
+    },
+  });
+
   useEffect(() => {
-    if (topicID) {
-      setLoading(true);
-      getTopic(topicID);
+    if (topicData && topicData[0]) {
+      setTopic(topicData[0]);
     }
-  }, [topicID]);
-
-  const getTopic = async (topicID: string) => {
-    try {
-      const _topic = await sanityClient.fetch(getTopicByIDQuery(topicID));
-      setTopic(_topic[0]);
-      setLoading(false);
-    } catch (error) {
+    if (topicError) {
+      console.log("Error fetching topic!");
       navigate("/");
-      setLoading(false);
     }
-  };
+  }, [topicData, topicError]);
 
-  return <Page content={loading ? <Spinner /> : <Editor topic={topic} />} />;
+  return (
+    <Page content={isTopicLoading ? <Spinner /> : <Editor topic={topic} />} />
+  );
 };
 
 export default Write;

@@ -4,23 +4,30 @@ import { Blog } from "../../types";
 import Spinner from "../Layout/Spinner";
 import Article from "./Article";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 const ArticleList = () => {
   const [articles, setArticles] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(false);
+
+  // Fetch Articles using React Query
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["fetchBlogs"],
+    queryFn: async () => {
+      let result: Blog[] = await sanityClient.fetch(getBlogQuery);
+      return result;
+    },
+  });
 
   useEffect(() => {
-    getArticles();
-  }, []);
+    if (data && data?.length > 0) {
+      setArticles(data);
+    }
+    if (error) {
+      console.log("Something went wrong ! ", error);
+    }
+  }, [data, error]);
 
-  const getArticles = async () => {
-    setLoading(true);
-    const _articles = await sanityClient.fetch(getBlogQuery);
-    setArticles(_articles);
-    setLoading(false);
-  };
-
-  if (loading) {
+  if (isLoading) {
     return <Spinner />;
   }
 

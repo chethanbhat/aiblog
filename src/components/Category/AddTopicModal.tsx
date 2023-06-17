@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getKeywordsQuery, sanityClient } from "../../utils";
 import Spinner from "../Layout/Spinner";
 import { Category, Keyword } from "../../types";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const AddTopicModal = ({
   categories,
@@ -12,7 +13,6 @@ const AddTopicModal = ({
   activeCategory: Category;
   cancel: () => void;
 }) => {
-  const [loading, setLoading] = useState(true);
   const [topic, setTopic] = useState("");
   const [allKeywords, setAllKeywords] = useState<Keyword[]>([]);
   const [selectedKeywords, setSelectedKeywords] = useState<Keyword[]>([]);
@@ -20,17 +20,29 @@ const AddTopicModal = ({
     activeCategory._id
   );
   const [newKeyword, setNewKeyword] = useState("");
+  const queryClient = useQueryClient();
+
+  // Fetch Keywords using React Query
+  const {
+    isLoading: isKeywordsLoading,
+    error: keywordError,
+    data: keywordData,
+  } = useQuery({
+    queryKey: ["fetchKeywords"],
+    queryFn: async () => {
+      let result: Keyword[] = await sanityClient.fetch(getKeywordsQuery);
+      return result;
+    },
+  });
 
   useEffect(() => {
-    getKeywords();
-  }, []);
-
-  const getKeywords = async () => {
-    setLoading(true);
-    const _keywords = await sanityClient.fetch(getKeywordsQuery);
-    setAllKeywords(_keywords);
-    setLoading(false);
-  };
+    if (keywordData && keywordData?.length > 0) {
+      setAllKeywords(keywordData);
+    }
+    if (keywordError) {
+      console.log("Error fetching categories!");
+    }
+  }, [keywordData, keywordError]);
 
   const addNewKeyword = async () => {
     await sanityClient
@@ -42,6 +54,7 @@ const AddTopicModal = ({
         setAllKeywords((prev) => {
           return [...prev, res];
         });
+        queryClient.invalidateQueries(["fetchKeywords"]);
       });
     setNewKeyword("");
   };
@@ -61,6 +74,8 @@ const AddTopicModal = ({
       })
       .then((res) => {
         console.log(res);
+        queryClient.invalidateQueries(["fetchTopics"]);
+        queryClient.invalidateQueries(["fetchTopicByID"]);
         // Close Modal
         cancel();
       });
@@ -108,7 +123,7 @@ const AddTopicModal = ({
             <label className="block mb-2 text-sm md:text-base">
               Keywords (select atleast one)
             </label>
-            {loading && <Spinner />}
+            {isKeywordsLoading && <Spinner />}
             <div className="max-h-[100px] md:max-h-[250px] overflow-y-auto flex flex-wrap gap-2">
               {allKeywords.map((k: Keyword) => (
                 <span

@@ -33,7 +33,10 @@ const TopicList = ({
               <h3 className="mb-4 text-sm md:text-base">{t.title}</h3>
               <div className="gap-2 hidden md:flex">
                 {t.keywords.map((k) => (
-                  <span className="border border-violet-700 text-violet-900 rounded-md px-1.5 py-1 cursor-pointer text-xs lowercase self-center truncate">
+                  <span
+                    key={k._id}
+                    className="border border-violet-700 text-violet-900 rounded-md px-1.5 py-1 cursor-pointer text-xs lowercase self-center truncate"
+                  >
                     {k.keyword}
                   </span>
                 ))}

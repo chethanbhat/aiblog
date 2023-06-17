@@ -8,6 +8,7 @@ import MoodBox from "./MoodBox";
 import ImageUploader from "./ImageUploader";
 import { useUser } from "../../context";
 import { AirplaneIcon, WriteIcon } from "../Icons/SVGIcons";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Editor = ({ topic }: { topic: Topic | null }) => {
   const [article, setArticle] = useState("");
@@ -16,6 +17,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
   const [generating, setGenerating] = useState(false);
   const { user } = useUser();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const createBlog = async () => {
     if (user && topic && article && imageAsset?._id) {
@@ -48,7 +50,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
         })
         .then((res) => {
           console.log(res);
-          // Close Modal
+          queryClient.invalidateQueries(["fetchBlogs"]);
           navigate("/blog");
         })
         .catch((err) => console.log("something went wrong => ", err));
