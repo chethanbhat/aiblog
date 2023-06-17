@@ -91,7 +91,7 @@ export const MenuItem = ({
   return (
     <NavLink
       className={({ isActive }) =>
-        `mb-4 text-sm md:text-base flex items-center  ${
+        `mb-6 text-sm md:text-base flex items-center  ${
           isActive
             ? `font-semibold text-amber-300`
             : `text-white hover:text-amber-300`

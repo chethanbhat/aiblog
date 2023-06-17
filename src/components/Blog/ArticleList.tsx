@@ -42,7 +42,7 @@ const ArticleList = () => {
         ))}
       </div>
       <Link
-        className="w-[150px] mx-auto mt-4 p-1 md:p-1 rounded border border-purple-900 flex items-center justify-center text-xs md:text-base"
+        className="w-[150px] mx-auto mt-4 p-1 md:p-1 rounded border border-violet-900 flex items-center justify-center text-xs md:text-base"
         to="/"
       >
         Back
