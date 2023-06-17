@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Topic } from "../../types";
+import { DeleteIcon, PencilIcon } from "../Icons/SVGIcons";
 
 const TopicList = ({
   topics,
@@ -19,9 +20,9 @@ const TopicList = ({
           >
             <span
               onClick={() => deleteTopic(t._id)}
-              className="absolute w-4 h-4 flex justify-center items-center top-[1%] left-[98.5%] rounded-full p-1 text-sm text-gray-400 hover:text-red-600 font-bold cursor-pointer"
+              className="absolute flex justify-center items-center top-[2%] left-[98%] rounded-full p-1 text-sm text-gray-500 hover:text-red-600 font-bold cursor-pointer"
             >
-              x
+              <DeleteIcon />
             </span>
             <div className="flex-1">
               <h3 className="mb-4">{t.title}</h3>
@@ -33,7 +34,10 @@ const TopicList = ({
                 ))}
               </div>
             </div>
-            <button className="text-xs self-center bg-violet-900 hover:bg-violet-700 text-white rounded px-2 py-1.5 shadow">
+            <button className="flex items-center text-xs self-center bg-violet-900 hover:bg-violet-700 text-white rounded px-2 py-1.5 shadow">
+              <span className="mr-2">
+                <PencilIcon />
+              </span>
               Write
             </button>
           </Link>

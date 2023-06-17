@@ -9,6 +9,7 @@ import AddTopicModal from "./AddTopicModal";
 import { Category, Topic } from "../../types";
 import TopicList from "../Topic/TopicList";
 import Spinner from "../Layout/Spinner";
+import { WriteIcon } from "../Icons/SVGIcons";
 
 const allCategory = {
   _id: "000",
@@ -123,8 +124,11 @@ export const CategoryTabs = ({
         </nav>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-violet-900 hover:bg-violet-700 text-white py-2 px-3 rounded-md text-sm"
+          className="bg-violet-900 hover:bg-violet-700 text-white py-2 px-3 rounded-md text-sm flex items-center"
         >
+          <span className="mr-2">
+            <WriteIcon />{" "}
+          </span>
           Add Topic
         </button>
       </div>

@@ -7,6 +7,7 @@ import EditorTextArea from "./EditorTextArea";
 import MoodBox from "./MoodBox";
 import ImageUploader from "./ImageUploader";
 import { useUser } from "../../context";
+import { AirplaneIcon, WriteIcon } from "../Icons/SVGIcons";
 
 const Editor = ({ topic }: { topic: Topic | null }) => {
   const [article, setArticle] = useState("");
@@ -117,7 +118,7 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
         <button
           disabled={generating}
           onClick={() => generateBlog()}
-          className="bg-amber-300 text-black px-2 py-1.5 rounded block shadow-sm disabled:bg-amber-100 disabled:cursor-pointer"
+          className="flex items-center bg-amber-300 text-black px-2 py-1.5 rounded shadow-sm disabled:bg-amber-100 disabled:cursor-pointer"
         >
           {generating ? (
             <span className="flex items-center">
@@ -127,7 +128,12 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
               </span>
             </span>
           ) : (
-            <>Generate with AI</>
+            <>
+              Generate with AI{" "}
+              <span className="ml-2">
+                <AirplaneIcon />
+              </span>
+            </>
           )}
         </button>
       </div>
@@ -141,8 +147,11 @@ const Editor = ({ topic }: { topic: Topic | null }) => {
       <button
         onClick={createBlog}
         disabled={!imageAsset || article === ""}
-        className="w-[250px]  bg-violet-900 hover:bg-violet-700 disabled:bg-gray-200 disabled:text-black disabled:cursor-not-allowed text-white px-2 py-1.5 rounded block shadow-sm"
+        className="w-[250px] flex justify-center items-center  bg-violet-900 hover:bg-violet-700 disabled:bg-gray-200 disabled:text-black disabled:cursor-not-allowed text-white px-2 py-1.5 rounded shadow-sm"
       >
+        <span className="mr-2">
+          <WriteIcon />
+        </span>
         Create Blog
       </button>
     </div>

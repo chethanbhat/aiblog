@@ -1,6 +1,8 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { googleLogout } from "@react-oauth/google";
 import { useUser } from "../../context";
+import { ReactNode } from "react";
+import { BlogIcon, CategoriesIcon, LogoutIcon } from "../Icons/SVGIcons";
 
 const Sidebar = () => {
   const { user, setUser } = useUser();
@@ -13,8 +15,8 @@ const Sidebar = () => {
       </Link>
       {/* Menu */}
       <nav>
-        <MenuItem url="/" title="Categories" />
-        <MenuItem url="/blog" title="Blog" />
+        <MenuItem url="/" title="Categories" icon={<CategoriesIcon />} />
+        <MenuItem url="/blog" title="Blog" icon={<BlogIcon />} />
         <button
           onClick={() => {
             googleLogout();
@@ -22,8 +24,11 @@ const Sidebar = () => {
             setUser(null);
             navigate("/");
           }}
-          className="block cursor-pointer text-white hover:text-amber-300"
+          className="flex items-center cursor-pointer text-white hover:text-amber-300"
         >
+          <span className="mr-2">
+            <LogoutIcon />
+          </span>
           Logout
         </button>
       </nav>
@@ -47,11 +52,19 @@ const Sidebar = () => {
 
 export default Sidebar;
 
-export const MenuItem = ({ url, title }: { url: string; title: string }) => {
+export const MenuItem = ({
+  url,
+  title,
+  icon,
+}: {
+  url: string;
+  title: string;
+  icon: ReactNode;
+}) => {
   return (
     <NavLink
       className={({ isActive }) =>
-        `block mb-4  ${
+        `mb-4 flex items-center  ${
           isActive
             ? `font-semibold text-amber-300`
             : `text-white hover:text-amber-300`
@@ -59,6 +72,7 @@ export const MenuItem = ({ url, title }: { url: string; title: string }) => {
       }
       to={url}
     >
+      <span className="mr-2">{icon}</span>
       {title}
     </NavLink>
   );
