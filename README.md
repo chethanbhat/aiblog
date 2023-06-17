@@ -6,8 +6,8 @@ AI Blog Writer is built with following technologies.
 
 - React using [Vite](https://vitejs.dev/)
 - UI library [TailwindCSS](https://tailwindcss.com/)
-- Sanity [https://www.sanity.io/] for CMS.
-- OpenAI [https://openai.com/] for AI Prompt Generation
+- [Sanity](https://www.sanity.io/) for CMS.
+- [OpenAI](https://openai.com/) for AI Prompt Generation
 - Google Login
 - TypeScript
 
