@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import { sanityClient } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Login = () => {
   const [credentials, setCredentials] = useState<any | null>(null);
   const { user: lsUser, setUser } = useUser();
+  const queryClient = useQueryClient();
 
   const navigate = useNavigate();
 
@@ -54,6 +56,7 @@ const Login = () => {
         .catch((err) => {
           console.log("Something went wrong => ", err);
         });
+      queryClient.invalidateQueries();
     } catch (error) {
       console.log("Authentication Failed => ", error);
     }
@@ -65,7 +68,7 @@ const Login = () => {
   });
 
   return (
-    <main className="bg-blue-50 w-screen h-screen flex justify-center items-center">
+    <main className="bg-blue-50 w-screen h-screen flex justify-center items-start sm:items-center py-[25%] sm:py-0">
       <div className="min-w-[250px] min-h-[250px] p-[24px] flex flex-col justify-center items-center">
         <h1 className="text-xl text-center text-blue-950 mb-6">
           Welcome to{" "}

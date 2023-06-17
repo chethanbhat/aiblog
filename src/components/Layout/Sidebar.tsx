@@ -9,9 +9,11 @@ import {
   LogoIcon,
   LogoutIcon,
 } from "../Icons/SVGIcons";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Sidebar = () => {
   const { user, setUser } = useUser();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   return (
     <aside className="h-full flex p-4 md:p-6 bg-violet-900 text-white flex-col">
@@ -34,6 +36,7 @@ const Sidebar = () => {
             googleLogout();
             localStorage.removeItem("user");
             setUser(null);
+            queryClient.invalidateQueries();
             navigate("/");
           }}
           className="flex items-center cursor-pointer text-white hover:text-amber-300"

@@ -42,7 +42,7 @@ const Page = ({ content }: { content: React.ReactNode }) => {
   }, [sidebarRef]);
 
   return (
-    <main className="bg-blue-50 flex h-screen relative">
+    <main className="bg-blue-50 flex h-screen overflow-hidden relative">
       <span
         onClick={() => setShowSidebar((prev) => !prev)}
         className={`inline-block md:hidden absolute top-2 left-2 cursor-pointer z-50 ${
