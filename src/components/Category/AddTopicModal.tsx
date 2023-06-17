@@ -3,6 +3,7 @@ import { getKeywordsQuery, sanityClient } from "../../utils";
 import Spinner from "../Layout/Spinner";
 import { Category, Keyword } from "../../types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useUser } from "../../context";
 
 const AddTopicModal = ({
   categories,
@@ -20,6 +21,7 @@ const AddTopicModal = ({
     activeCategory._id
   );
   const [newKeyword, setNewKeyword] = useState("");
+  const { user } = useUser();
   const queryClient = useQueryClient();
 
   // Fetch Keywords using React Query
@@ -70,6 +72,10 @@ const AddTopicModal = ({
         category: {
           _type: "reference",
           _ref: selectedCategory,
+        },
+        createdBy: {
+          _type: "reference",
+          _ref: user?.id,
         },
       })
       .then((res) => {

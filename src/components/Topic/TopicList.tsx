@@ -24,7 +24,9 @@ const TopicList = ({
           >
             {user?.id === t?.createdBy?.id && (
               <span
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
                   deleteTopic(t._id);
                   queryClient.invalidateQueries(["fetchTopics"]);
                   queryClient.invalidateQueries(["fetchTopicByID"]);
