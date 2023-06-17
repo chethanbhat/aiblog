@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Topic } from "../../types";
 import { DeleteIcon, PencilIcon } from "../Icons/SVGIcons";
 import { useUser } from "../../context";
+import { useQueryClient } from "@tanstack/react-query";
 
 const TopicList = ({
   topics,
@@ -11,6 +12,7 @@ const TopicList = ({
   deleteTopic: (id: string) => void;
 }) => {
   const { user } = useUser();
+  const queryClient = useQueryClient();
   return (
     <div className="w-full pr-4 flex-1 overflow-y-auto">
       {topics.length > 0 ? (
@@ -22,7 +24,11 @@ const TopicList = ({
           >
             {user?.id === t?.createdBy?.id && (
               <span
-                onClick={() => deleteTopic(t._id)}
+                onClick={() => {
+                  deleteTopic(t._id);
+                  queryClient.invalidateQueries(["fetchTopics"]);
+                  queryClient.invalidateQueries(["fetchTopicByID"]);
+                }}
                 className="absolute flex justify-center items-center top-[2%] left-[90%] md:left-[98%] rounded-full p-1 text-sm text-gray-500 hover:text-red-600 font-bold cursor-pointer"
               >
                 <DeleteIcon />
