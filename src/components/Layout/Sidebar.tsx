@@ -2,7 +2,13 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { googleLogout } from "@react-oauth/google";
 import { useUser } from "../../context";
 import { ReactNode } from "react";
-import { BlogIcon, CategoriesIcon, LogoutIcon } from "../Icons/SVGIcons";
+import {
+  BlogIcon,
+  CategoriesIcon,
+  GitHubIcon,
+  LogoIcon,
+  LogoutIcon,
+} from "../Icons/SVGIcons";
 
 const Sidebar = () => {
   const { user, setUser } = useUser();
@@ -10,7 +16,13 @@ const Sidebar = () => {
   return (
     <aside className="w-1/6 h-full p-6 bg-violet-900 text-white flex flex-col">
       {/* Brand */}
-      <Link to="/" className="h-[150px] text-xl font-bold hover:text-amber-300">
+      <Link
+        to="/"
+        className="h-[150px] text-xl font-bold hover:text-amber-300 flex items-center"
+      >
+        <span className="mr-2">
+          <LogoIcon />
+        </span>
         AI Blog Writer
       </Link>
       {/* Menu */}
@@ -42,6 +54,18 @@ const Sidebar = () => {
           />
           <span>{user?.username || user?.email}</span>
         </div>
+        <a
+          className="hover:text-amber-300 group"
+          href="https://github.com/chethanbhat/aiblog"
+        >
+          <h5 className="flex items-center mb-4">
+            Star this Project on
+            <span className="mx-2">
+              <GitHubIcon />
+            </span>{" "}
+          </h5>
+        </a>
+
         <a className="hover:text-amber-300" href="https://chethanbhat.com">
           @2023 - chethanbhat.com
         </a>
